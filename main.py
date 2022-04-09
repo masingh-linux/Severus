@@ -1,17 +1,20 @@
 from calendar import c
 import Constants
 import IfPostgre as psql
+import Facerecognition as frc
 
-psql.IfPostgre.create_database()
+face_rc = frc.Facerecognition()
+# print(face_rc)
 
-postgres = psql.IfPostgre() #init call
-vold = psql.IfPostgre()
+# psql.IfPostgre.create_database()
 
-postgres.del_table()
-postgres.create_table()
+# postgres = psql.IfPostgre() #init call
+# vold = psql.IfPostgre()
 
-print(postgres)
+# postgres.del_table()
+# postgres.create_table()
 
+# print(postgres)
 
 
 
