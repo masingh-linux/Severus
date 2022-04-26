@@ -5,13 +5,13 @@ import os
 
 psql.IfPostgre.create_database()
 postgres = psql.IfPostgre()
-postgres.create_table()
-
-for (root,dirs,files) in os.walk(Constants.IMAGE_DIR_PATH):
-    for file in files:
-        img_path = os.path.abspath(os.path.join(root, file))
-        enc = frc.IfFaceRecognition.get_face_encodings(img_path)
-
+postgres.create_table(False)
+#
+#for (root,dirs,files) in os.walk(Constants.IMAGE_DIR_PATH):
+#    for file in files:
+#        img_path = os.path.abspath(os.path.join(root, file))
+#        enc = frc.IfFaceRecognition.get_face_encodings(img_path)
+#
 
 # print(face_rc)
 
