@@ -1,10 +1,5 @@
-from click import command
 import psycopg2
 import Constants
-
-# Severus
-# Postgres
-# SQL
 
 class IfPostgre:
 
@@ -91,9 +86,3 @@ class IfPostgre:
         finally:
             #Closing the connection
             conn.close()
-
-
-
-
-
-        
