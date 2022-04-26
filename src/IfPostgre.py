@@ -19,11 +19,33 @@ class IfPostgre:
         except (Exception, psycopg2.DatabaseError) as error:
             print("Error: " + str(error))
 
-    def create_table(self):
+    def create_table(self, delete_table=True):
         """
-        Creates a new table in the database severus
-        """
-        pass
+        Create table in database severus
+        
+        Args:
+            delete_table (bool, optional): 
+                True if table is to be deleted before creating. Defaults to True.
+                False if table is not to be  deleted and if already exists leave as it is
+        """        
+        try:    
+            commands = """
+                CREATE TABLE 
+                    face_encoding (
+                        person_id VARCHAR(255), 
+                        encodings text [] PRIMARY KEY
+                    );
+                """
+            if delete_table:
+                #Doping EMPLOYEE table if already exists.
+                self.cursor.execute("DROP TABLE IF EXISTS face_encoding")
+
+            self.cursor.execute(commands)
+            # commit the transaction
+            self.conn.commit()
+        except Exception as error:
+            self.conn.rollback()
+            print("Error: " + str(error))
     
     def del_table(self):
         """
@@ -36,7 +58,7 @@ class IfPostgre:
         Creates Database for the project
         """
         try:
-            #establishing the connection
+            #establishing the connection to deafult database so that we have an entrypoint to DB
             conn = psycopg2.connect(
                database="postgres", user='postgres', password='postgres', host='127.0.0.1', port= '5432'
             )
@@ -64,4 +86,3 @@ class IfPostgre:
         finally:
             #Closing the connection
             conn.close()
-        
