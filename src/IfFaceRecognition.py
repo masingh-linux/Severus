@@ -1,7 +1,12 @@
 import face_recognition
 
-class IfFaceRecognition:        
+class IfFaceRecognition:
+    """_summary_
 
+    Returns:
+        _type_: _description_
+    """
+    @staticmethod
     def get_face_encodings(image_path):
         '''
         This method returns all face encodings from an image
@@ -13,4 +18,3 @@ class IfFaceRecognition:
         except Exception as error:
             print(error)
             return None
-
