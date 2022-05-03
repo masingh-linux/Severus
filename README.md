@@ -24,3 +24,4 @@ git commit -m "<Commit message>"
 
 #### Push to the server
 git push --set-upstream origin <branch_name>
+
