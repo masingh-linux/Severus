@@ -31,6 +31,34 @@ class IfPostgre:
     def create_table(self, delete_table=True):
         """
         Create table in database severus
+        
+        Args:
+            delete_table (bool, optional): 
+                True if table is to be deleted before creating. Defaults to True.
+                False if table is not to be  deleted and if already exists leave as it is
+        """        
+        try:    
+            commands = """
+                CREATE TABLE 
+                    face_encoding (
+                        person_id VARCHAR(255), 
+                        encodings text [] PRIMARY KEY
+                    );
+                """
+            if delete_table:
+                #Doping EMPLOYEE table if already exists.
+                self.cursor.execute("DROP TABLE IF EXISTS face_encoding")
+
+            self.cursor.execute(commands)
+            # commit the transaction
+            self.conn.commit()
+        except Exception as error:
+            self.conn.rollback()
+            print("Error: " + str(error))
+    
+    def del_table(self):
+        """
+        Create table in database severus
 
         Args:
             delete_table (bool, optional):
@@ -94,4 +122,3 @@ class IfPostgre:
         finally:
             # Closing the connection
             conn.close()
-

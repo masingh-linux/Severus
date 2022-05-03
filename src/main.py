@@ -5,7 +5,6 @@ import IfFaceRecognition as frc
 import SeverusUtils as su
 import time
 
-
 # postgres =  psql.IfPostgre.create_database()
 # postgres = psql.IfPostgre()
 # postgres.create_table(False)
