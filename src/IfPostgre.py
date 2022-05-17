@@ -1,13 +1,19 @@
 """
 IfPostgres
 """
+from typing import List
+from click import command
 import psycopg2
 import Constants
+import SeverusUtils as su
+import json
+import numpy 
 
 class IfPostgre:
     """
     Class for  Database Interface
     """
+
     def __init__(self) -> None:
         """
         Constructor
@@ -42,7 +48,8 @@ class IfPostgre:
                 CREATE TABLE
                     face_encoding (
                         person_id VARCHAR(255),
-                        encodings text [] PRIMARY KEY
+                        encoding VARCHAR(4096),
+                        encoding_hash VARCHAR(129) PRIMARY KEY
                     );
                 """
             if delete_table:
@@ -55,6 +62,47 @@ class IfPostgre:
         except psycopg2.DatabaseError as error:
             self.conn.rollback()
             print("Error: " + str(error))
+
+    def insert_entry_face_encoding(self, encoding, name=None):
+        try:
+            if name is None:
+                name = su.SeverusUtils.get_random_name()
+            # command to add values in db table
+            command = """
+            INSERT into face_encoding (person_id, encoding, encoding_hash)
+            VALUES ('%s','%s', '%s');""" % (name,
+                                            json.dumps(encoding.tolist()),
+                                            su.SeverusUtils.get_sha512_hash_of_str(encoding))
+            self.cursor.execute(command)
+            # commit the transaction
+            self.conn.commit()
+        except psycopg2.DatabaseError as error:
+            self.conn.rollback()
+            print("Error: " + str(error))
+
+    def get_face_encoding(self, name) -> List:
+        """Get Face Encodings for the Name 
+
+        Args:
+            name (_type_): Person Name to be fetched data for
+
+        Returns:
+            List: List of face_encodings
+        """        
+        ret = []
+        try:
+            command = """
+            SELECT encoding 
+            FROM face_encoding 
+            WHERE person_id='%s';""" % (name)
+            self.cursor.execute(command)
+            data = self.cursor.fetchall()
+            for row in data:
+                ret.append(numpy.array(json.loads(row[0])))
+        except psycopg2.DatabaseError as error:
+            self.conn.rollback()
+            print("Error: " + str(error))
+        return ret
 
     @staticmethod
     def create_database():
@@ -84,7 +132,7 @@ class IfPostgre:
 
             # Preparing query to create a database
             sql = "CREATE DATABASE " + Constants.DATABASE_NAME + ";"
-            print(sql)
+            # print(sql)
 
             # Creating a database
             cursor.execute(sql)
@@ -94,4 +142,3 @@ class IfPostgre:
         finally:
             # Closing the connection
             conn.close()
-
