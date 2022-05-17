@@ -26,8 +26,6 @@ git commit -m "<Commit message>"
 git push --set-upstream origin <branch_name>
 
 
-
-
 # SQL Queries
 INSERT into <table_name> (column1,  coloumn2,  coloumn 3) VALUE (value1,  value2,  value3);
 

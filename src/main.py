@@ -25,9 +25,6 @@ except Exception as e:
     print("Error:" + str(e))
 print(postgres.get_face_encoding("YSFHZMZQTQ") , "\n**************Value String*****************")
 
-
-
-
 # print(face_rc)
 
 # psql.IfPostgre.create_database()
