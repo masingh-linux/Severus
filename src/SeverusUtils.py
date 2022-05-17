@@ -26,7 +26,7 @@ class SeverusUtils:
         )
 
     @staticmethod
-    def get_sha512_hash(image_path):
+    def get_sha512_hash_of_image(image_path):
         """calculate sha512 hash of an image
 
         Args:
@@ -43,6 +43,22 @@ class SeverusUtils:
 
         # update hasher with data
         hasher.update(buffer)
+
+        # get hash
+        return hasher.hexdigest()
+
+    @staticmethod
+    def get_sha512_hash_of_str(data):
+        """calculate sha512 hash of an str
+
+        Args:
+            data (str): str containig data
+        """
+        # get sha512 object
+        hasher = hashlib.sha512()
+
+        # update hasher with data
+        hasher.update(data.encode("utf8"))
 
         # get hash
         return hasher.hexdigest()
