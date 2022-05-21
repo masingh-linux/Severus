@@ -1,6 +1,9 @@
 import random
 import string
 import hashlib
+import IfFaceRecognition as frc
+
+import IfPostgre
 
 
 class SeverusUtils:
@@ -62,3 +65,12 @@ class SeverusUtils:
 
         # get hash
         return hasher.hexdigest()
+
+    def get_encoding_present_in_db(postgres: IfPostgre, encoding):
+        db_encodings  = postgres.get_all_encodings()
+        matches = frc.face_recognition.compare_faces(db_encodings, encoding)
+        try:
+            index = matches.index(True)
+        except ValueError as e:
+            return 
+        return db_encodings[index]

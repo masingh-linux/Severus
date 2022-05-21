@@ -14,6 +14,10 @@ class IfFaceRecognition:
         '''
         try:
             image_loading = face_recognition.load_image_file(image_path)
+            # enc = tuple(face_recognition.face_encodings(image_loading))
+            # for entry in enc:
+
+            # face_recognition.compare_faces()
             return tuple(face_recognition.face_encodings(image_loading))
         except Exception as error:
             print(error)
