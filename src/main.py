@@ -9,7 +9,7 @@ import numpy
 
 # postgres =  psql.IfPostgre.create_database()
 postgres = psql.IfPostgre()
-postgres.create_table(False)
+postgres.create_table(True)
 try:
     for (root, dirs, files) in os.walk(Constants.IMAGE_DIR_PATH):
         for file in files:
@@ -23,7 +23,13 @@ try:
             fd.write(str(enc))
 except Exception as e:
     print("Error:" + str(e))
-print(postgres.get_face_encoding("YSFHZMZQTQ") , "\n**************Value String*****************")
+enc = frc.IfFaceRecognition.get_face_encodings('../temp/1.jpg')
+print([su.SeverusUtils.get_encoding_present_in_db(postgres, enc[0])])
+
+# enc = frc.IfFaceRecognition.get_face_encodings('../temp/1.jpg')
+# for entry in enc:
+#     encoding = entry
+# postgres.update_person_name("Manisha", encoding)
 
 # print(face_rc)
 

@@ -1,5 +1,11 @@
 # Severus
 
+# Get to main Branch
+git checkout main
+
+# Prune all deleted branches
+git fetch -p
+
 Commit Commands
 
 # Create a new branch
