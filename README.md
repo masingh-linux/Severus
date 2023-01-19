@@ -1,5 +1,9 @@
 # Severus
 
+A Face recognition library wrapper for personal use
+
+### Commands for quick access
+
 # Get to main Branch
 git checkout main
 
